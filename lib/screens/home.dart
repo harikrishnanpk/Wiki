@@ -1,7 +1,7 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:mywiki/screens/wikiInfo.dart';
 import 'package:mywiki/service/webService.dart';
-import 'package:transparent_image/transparent_image.dart';
 
 import '../model/wikiItem.dart';
 
@@ -103,11 +103,19 @@ class _HomePageState extends State<HomePage> {
 
   Widget userIcon(Thumbnail thumbnail) {
     if (thumbnail != null) {
-      return FadeInImage.memoryNetwork(
+      return CachedNetworkImage(
           height: 100,
           width: 100,
-          placeholder: kTransparentImage,
-          image: thumbnail.source);
+          placeholder: (
+            context,
+            url,
+          ) =>
+              Image.asset(
+                'images/user.png',
+                height: 100,
+                width: 100,
+              ),
+          imageUrl: thumbnail.source);
     } else {
       return Image.asset(
         'images/user.png',
